@@ -3,11 +3,12 @@ import { render } from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
 import './app.css'
+
 import AddVideo from './components/AddVideo';
 import configureStore from './store';
 import {Provider, connect} from 'react-redux';
 import {fetchData} from './actions';
-
+import ViewVideo from './components/ViewVideo'
 
 class App extends React.Component {
   constructor(props) {
@@ -62,40 +63,25 @@ class Index extends React.Component {
 
 class Page1 extends React.Component {
   render() {
-    const lists = [
-      {
-        embed: 'XYNQ297Z_-U',
-        img: 'https://i.ytimg.com/vi/XYNQ297Z_-U/hqdefault.jpg?custom=true&w=320&h=180&stc=true&jpg444=true&jpgq=90&sp=68&sigh=a72iJQySoD5p4KrDjQ22kapn0oY',
-        text: 'FOR The Rima'
-      },{
-        embed: 'D9ksLn6hZ7Q',
-        img: 'https://i.ytimg.com/vi/D9ksLn6hZ7Q/hqdefault.jpg?custom=true&w=320&h=180&stc=true&jpg444=true&jpgq=90&sp=68&sigh=xxNS1gnuonwWjqQrPhC46KcUNtE',
-        text: 'G.E.M.鄧紫棋 - 多遠都要在一起'
-      },{
-        embed: 'WD7eOgBp6UU',
-        img: 'https://i.ytimg.com/vi/WD7eOgBp6UU/hqdefault.jpg?custom=true&w=320&h=180&stc=true&jpg444=true&jpgq=90&sp=68&sigh=Yik4w9phON0uIcDCDZsOAVvBym4',
-        text: 'G.E.M.鄧紫棋 - 喜歡你'
-      },{
-        embed: 'XYNQ297Z_-U',
-        img: 'https://i.ytimg.com/vi/XYNQ297Z_-U/hqdefault.jpg?custom=true&w=320&h=180&stc=true&jpg444=true&jpgq=90&sp=68&sigh=a72iJQySoD5p4KrDjQ22kapn0oY',
-        text: 'FOR The Rima'
-      },{
-        embed: 'D9ksLn6hZ7Q',
-        img: 'https://i.ytimg.com/vi/D9ksLn6hZ7Q/hqdefault.jpg?custom=true&w=320&h=180&stc=true&jpg444=true&jpgq=90&sp=68&sigh=xxNS1gnuonwWjqQrPhC46KcUNtE',
-        text: 'G.E.M.鄧紫棋 - 多遠都要在一起'
-      },{
-        embed: 'WD7eOgBp6UU',
-        img: 'https://i.ytimg.com/vi/WD7eOgBp6UU/hqdefault.jpg?custom=true&w=320&h=180&stc=true&jpg444=true&jpgq=90&sp=68&sigh=Yik4w9phON0uIcDCDZsOAVvBym4',
-        text: 'G.E.M.鄧紫棋 - 喜歡你'
+    const {data} = this.props
+    const lists = Object.keys(data).map(key => {
+      return {
+        date: data[key].date,
+        desc: data[key].desc,
+        img: data[key].img,
+        location: data[key].location,
+        title: data[key].title,
+        tags: data[key].tags,
+        url: data[key].url
       }
-    ]
+    })
     return (
       <div className="Page">
         <h1>熱門影片</h1>
         <ul className="lists">
           {lists.map((list, i) => (
             <li className="list" key={i}>
-              <ViewVideo src={list.img} text={list.text} embed={list.embed} />
+              <ViewVideo src={list.img} text={list.title} />
               <p>{list.text}</p>
             </li>
           ))}
@@ -118,16 +104,16 @@ class Page2 extends React.Component {
 function mapStateToProps(state) {
 
   return {
-    allData: state.allData
+    data: state.allData.videos
   }
 }
 
 render((
   <Provider store={configureStore()}>
     <Router history={browserHistory}>
-      <Route path="/" component={connect(mapStateToProps)(App)}>
+      <Route path="/" component={connect()(App)}>
         <IndexRoute component={Index}/>
-        <Route path="page1" component={Page1} />
+        <Route path="page1" component={connect(mapStateToProps)(Page1)} />
         <Route path="page2" component={Page2} />
       </Route>
     </Router>
