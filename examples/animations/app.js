@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
 import './app.css'
+import AddVideo from './components/AddVideo';
 
 class App extends React.Component {
   render() {
@@ -12,7 +13,7 @@ class App extends React.Component {
           <li><Link to="/page1">闖紅燈</Link></li>
           <li><Link to="/page2">超速駕駛</Link></li>
         </ul>
-
+        <AddVideo />
         <ReactCSSTransitionGroup
           component="div"
           transitionName="example"

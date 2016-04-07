@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import TextField from 'material-ui/lib/text-field';
+import Firebase from 'firebase';
 
 export default class AddVideo extends Component {
   constructor(props) {
@@ -28,22 +29,28 @@ export default class AddVideo extends Component {
   }
 
   handleSubmit() {
+    let ref = new Firebase('https://drar.firebaseio.com/');
     let url = this.refs.url.getValue(),
         title = this.refs.title.getValue(),
         location = this.refs.location.getValue(),
         desc = this.refs.desc.getValue(),
         tags = this.refs.tags.getValue(),
-        date = this.refs.date.getDate()
+        date = this.refs.date.getValue()
 
-    this.setState({
-      open: false,
+    ref.push({
       url: url,
       title: title,
       location: location,
       desc: desc,
       tage: tags,
       date: date
+    }, () => {
+      this.setState({
+        open: false
+      });
     });
+
+
   }
 
   handleClose() {
@@ -103,8 +110,8 @@ export default class AddVideo extends Component {
             floatingLabelText="標籤"
             ref="tags"
           /><br/>
-          <DatePicker
-           hintText="Date"
+          <TextField
+           hintText="yyyy-mm-dd"
            floatingLabelText="日期"
            ref="date"
           />
