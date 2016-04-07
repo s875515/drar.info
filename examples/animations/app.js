@@ -4,28 +4,44 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
 import './app.css'
 import AddVideo from './components/AddVideo';
+import configureStore from './store';
+import {Provider, connect} from 'react-redux';
+import {fetchData} from './actions';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    let {dispatch} = this.props;
+    dispatch(fetchData());
+  }
+
   render() {
     return (
       <div>
-        <ul>
-          <li className="menu-tab"><Link to="/page1">熱門影片</Link></li>
-          <li className="menu-tab"><Link to="/page2">精選影片</Link></li>
-        </ul>
-        <AddVideo />
-        <ReactCSSTransitionGroup
-          className="main-container"
-          component="div"
-          transitionName="example"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-        >
-          {React.cloneElement(this.props.children, {
-            key: this.props.location.pathname
-          })}
-        </ReactCSSTransitionGroup>
-
+        <div className="breadcrumbs">
+          <h1><Link to="/">行車紀錄器分享平台</Link></h1>
+          <AddVideo />
+        </div>
+        <div>
+          <ul>
+            <li className="menu-tab"><Link to="/page1">熱門影片</Link></li>
+            <li className="menu-tab"><Link to="/page2">精選影片</Link></li>
+          </ul>
+          <ReactCSSTransitionGroup
+            className="main-container"
+            component="div"
+            transitionName="example"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
+          >
+            {React.cloneElement(this.props.children, {
+              key: this.props.location.pathname
+            })}
+          </ReactCSSTransitionGroup>
+        </div>
       </div>
     )
   }
@@ -98,13 +114,21 @@ class Page2 extends React.Component {
     )
   }
 }
+function mapStateToProps(state) {
+
+  return {
+    allData: state.allData
+  }
+}
 
 render((
-  <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={Index}/>
-      <Route path="page1" component={Page1} />
-      <Route path="page2" component={Page2} />
-    </Route>
-  </Router>
+  <Provider store={configureStore()}>
+    <Router history={browserHistory}>
+      <Route path="/" component={connect(mapStateToProps)(App)}>
+        <IndexRoute component={Index}/>
+        <Route path="page1" component={Page1} />
+        <Route path="page2" component={Page2} />
+      </Route>
+    </Router>
+  </Provider>
 ), document.getElementById('main'))
