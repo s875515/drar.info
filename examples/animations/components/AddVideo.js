@@ -7,9 +7,12 @@ import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import TextField from 'material-ui/lib/text-field';
 import Firebase from 'firebase';
 
-function getYoutubeImg(url) {
+function youtubeUrlParser(url) {
   let id = url.match(/\?v=(.*)/)[1];
-  return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  return {
+    img: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+    embed: id
+  };
 }
 
 export default class AddVideo extends Component {
@@ -44,7 +47,8 @@ export default class AddVideo extends Component {
 
     ref.push({
       url: url,
-      img: getYoutubeImg(url),
+      img: youtubeUrlParser(url).img,
+      embed: youtubeUrlParser(url).embed,
       title: title,
       location: location,
       desc: desc,

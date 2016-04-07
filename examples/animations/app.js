@@ -72,17 +72,19 @@ class Page1 extends React.Component {
         location: data[key].location,
         title: data[key].title,
         tags: data[key].tags,
-        url: data[key].url
+        url: data[key].url,
+        embed: data[key].embed
       }
     })
+
     return (
       <div className="Page">
         <h1>熱門影片</h1>
         <ul className="lists">
           {lists.map((list, i) => (
             <li className="list" key={i}>
-              <ViewVideo src={list.img} text={list.title} />
-              <p>{list.text}</p>
+              <ViewVideo src={list.img} text={list.title} embed={list.embed} />
+              <p>{list.desc}</p>
             </li>
           ))}
         </ul>
