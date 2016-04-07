@@ -49,14 +49,12 @@ export default class AddVideo extends Component {
         open: false
       });
     });
-
-
   }
 
   handleClose() {
-
     this.setState({open: false});
   }
+
   render() {
     const actions = [
       <FlatButton
