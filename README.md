@@ -1,148 +1,127 @@
-# react-router [![Travis][build-badge]][build] [![npm package][npm-badge]][npm]
+# React Transform Boilerplate
 
-[`react-router`](https://www.npmjs.com/package/react-router) is a complete routing library for [React](https://facebook.github.io/react).
+[![react-transform channel on Discord](https://img.shields.io/badge/discord-react--transform%40reactiflux-61DAFB.svg?style=flat-square)](http://www.reactiflux.com)
 
-React Router keeps your UI in sync with the URL. It has a simple API with powerful features like lazy code loading, dynamic route matching, and location transition handling built right in. Make the URL your first thought, not an after-thought.
+## 🚧🚧🚧🚧🚧
 
-[![Coveralls][coveralls-badge]][coveralls]
-[![Discord][discord-badge]][discord]
+### Highly Experimental
 
-### Docs & Help
+This is **highly experimental tech**. If you’re enthusiastic about hot reloading, by all means, give it a try, but don’t bet your project on it. Either of the technologies it relies upon may change drastically or get deprecated any day. You’ve been warned 😉 .
 
-- [Tutorial – do this first!](https://github.com/reactjs/react-router-tutorial)
-- [Guides and API docs](https://github.com/reactjs/react-router/tree/master/docs)
-- [Troubleshooting guide](https://github.com/reactjs/react-router/blob/master/docs/Troubleshooting.md)
-- [Changelog](/CHANGES.md)
-- [Stack Overflow](http://stackoverflow.com/questions/tagged/react-router)
-- [CodePen boilerplate](http://codepen.io/anon/pen/xwQZdy?editors=001)
-  Please use for bug reports
+### Not a Boilerplate
 
-**Older Versions:**
+While this is a boilerplate project, it is not the kind that you can copy, paste, and forget. It does not help you pick the right structure for your app, and it does not show how to handle problems like images, static assets, CSS, server rendering, etc.
 
-- 0.13.x - [docs](https://github.com/reactjs/react-router/tree/0.13.x/docs/guides) / [code](https://github.com/reactjs/react-router/tree/0.13.x) / [upgrade guide](https://github.com/reactjs/react-router/blob/master/upgrade-guides/v1.0.0.md)
-- 1.0.x - [docs](https://github.com/reactjs/react-router/tree/1.0.x/docs) / [code](https://github.com/reactjs/react-router/tree/1.0.x) / [upgrade guide](https://github.com/reactjs/react-router/blob/master/upgrade-guides/v2.0.0.md)
+**It exists to prototype next-generation React developer experience** with hot reloading that preserves component state and DOM, and error handling both for syntax and runtime errors in `render()`. You can learn techniques from this boilerplate and use them in your project but please don’t copy it blindly if you don’t know the underlying technologies well. Otherwise you are likely to get disillusioned with JavaScript tooling.
 
-For questions and support, please visit [our channel on Reactiflux](https://discord.gg/0ZcbPKXt5bYaNQ46) or [Stack Overflow](http://stackoverflow.com/questions/tagged/react-router). The issue tracker is *exclusively* for bug reports and feature requests.
+**No effort went into making this user-friendly yet. The goal is to eventually kill this technology** in favor of less hacky technologies baked into React. These projects are not long term.
 
-### Browser Support
+### You May Not Need It
 
-We support all browsers and environments where React runs.
+Even if you like hot reloading, you still may not need React Transform. **If you use something like [Redux](https://github.com/reactjs/redux) for managing your state, we suggest that you just [use Webpack HMR API directly instead of all the hacky proxies, Babel plugins, and all that jazz](https://github.com/reactjs/redux/pull/1455).** Seriously, check it out, it’s a much cleaner solution that may work great for you.
 
-### Installation
+## About
 
-Using [npm](https://www.npmjs.com/):
+This project is a reference implementation of **[babel-plugin-react-transform](https://github.com/gaearon/babel-plugin-react-transform)**. It can be used as a boilerplate demonstrating a few useful transforms:
 
-    $ npm install --save react-router
+* [**react-transform-hmr**](https://github.com/gaearon/react-transform-hmr) - enables hot reloading react components
+* [**react-transform-catch-errors**](https://github.com/gaearon/react-transform-catch-errors) - catches errors inside `render()`
 
-Then with a module bundler like [webpack](https://webpack.github.io/) that supports either CommonJS or ES2015 modules, use as you would anything else:
+For convenience, they are packed in a single preset called [**react-transform-hmre**](https://github.com/danmartinez101/babel-preset-react-hmre) but you can make your own.
 
-```js
-// using an ES6 transpiler, like babel
-import { Router, Route, Link } from 'react-router'
+Syntax errors are displayed in an overlay using **[@glenjamin](https://github.com/glenjamin)**’s **[webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middleware)**, which replaces Webpack Dev Server. This project **[does not](https://medium.com/@dan_abramov/the-death-of-react-hot-loader-765fa791d7c4)** use React Hot Loader.
 
-// not using an ES6 transpiler
-var Router = require('react-router').Router
-var Route = require('react-router').Route
-var Link = require('react-router').Link
+## Demo
+
+![react-transform-boilerplate](https://cloud.githubusercontent.com/assets/1539088/11611771/ae1a6bd8-9bac-11e5-9206-42447e0fe064.gif)
+
+## Installation
+
+```bash
+git clone https://github.com/gaearon/react-transform-boilerplate.git
+cd react-transform-boilerplate
+npm install
+npm start
+open http://localhost:3000
 ```
 
-The UMD build is also available on [npmcdn](https://npmcdn.com):
+Transforms are enabled for files inside `src` (except `index.js`).
 
-```html
-<script src="https://npmcdn.com/react-router/umd/ReactRouter.min.js"></script>
-```
+## FAQ
 
-You can find the library on `window.ReactRouter`.
+#### Do I need to use it in my React project?
 
-### What's it look like?
+No! This is experimental stuff. It’s not polished, it doesn’t work in all browsers, the docs are poor, and it presumes you understand how Babel, Webpack, React, and other tools can work together. If you’re a beginner, we suggest you to work with more simple and stable boilerplates, and come back when you’re comfortable with them and want to experiment with your own tooling.
+
+#### Should I run this on the server / in tests / in production?
+
+No! This is only meant for client development environment. Make sure your `NODE_ENV` is neither `development` nor empty in these environments. Alternatively you can put the Babel configuration under a different `env` key and use your custom `NODE_ENV` or `BABEL_ENV` to turn these transforms on. Or you can [embed Babel configuration inside the Webpack config ](https://github.com/babel/babel-loader#options). No matter how you do it, **make sure you’re *only* running this transform in client-side development mode, and it is disabled on the server, in tests, and in production.**
+
+#### I can’t serve images, use different HTML, add CSS, etc.
+
+This project is a reference implementation of **[babel-plugin-react-transform](https://github.com/gaearon/babel-plugin-react-transform)**—it is just a Webpack bundle served by an Express server. It’s not meant to demonstrate every feature of either project. Please consult Webpack and Express docs to learn how to serve images, or bundle them into your JavaScript application. For example, [you can use `express.static()` to serve static assets](https://github.com/gaearon/react-transform-boilerplate/pull/52).
+
+#### I get “full reload needed” when I edit some files
+
+Webpack hot module updates follow the import chain. As long as a module “ends up” being imported from components only, hot updates should work. If a specific module import chain ends in something like `index.js` which is not a component, hot updates will fail because `react-transform-hmr` has no idea how to handle updates to something other than components.
+
+Note that by “components” we currently mean components created either by inheriting from `React.Component` or created with `React.createClass()`. We don’t currently support functional components although [this might be implemented for the future](https://github.com/gaearon/babel-plugin-react-transform/issues/57). If you use something like Redux, note that you can get support for functional components for free without React Transform—maybe [this is exactly what you want?](https://github.com/reactjs/redux/pull/1455)
+
+That said you can write manual code to handle hot updates of modules that don’t end up consumed by components. For example, this is how [we hot replace reducers in Redux](https://github.com/reactjs/redux/blob/952b45d6d74f1789ddc4ed05043a2c6e1a5ea808/examples/async/store/configureStore.js#L13-L19).
+
+#### What errors does it catch?
+
+`react-transform-catch-errors` catches **runtime errors inside `render()` method** of React components it detects.
+Webpack Hot Middleware catches **syntax errors anywhere in the module**.
+
+These are two different tools and you need to be aware of that.
+
+#### Can I use WebpackDevServer with this?
+
+Absolutely! We only show Express server with `webpack-dev-middleware` and `webpack-hot-middleware` because people often have a Node server anyway, and it can be tricky to configure WebpackDevServer to work with existing server. Additionally, `webpack-hot-middleware` displays syntax errors in an overlay, which WebpackDevServer doesn’t do.
+
+However, you can use WebpackDevServer instead of the custom server just fine.
+
+#### I don’t see the syntax error overlay
+
+Make sure your react-app is not attached to `document.body`. The client overlay provided by [webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middleware) will render into `document.body`. 
+
+Attaching the React root node to `document.body` requires extra caution, as many third-party packages will append their markup to the body as well. React will replace the entire contents in the body on every re-render. Thus, you will not see the additional markup.
+
+It’s always better to render your React app in a `#root` DOM element.
 
 ```js
 import React from 'react'
 import { render } from 'react-dom'
-import { Router, Route, Link, browserHistory } from 'react-router'
-
-const App = React.createClass({/*...*/})
-const About = React.createClass({/*...*/})
-// etc.
-
-const Users = React.createClass({
-  render() {
-    return (
-      <div>
-        <h1>Users</h1>
-        <div className="master">
-          <ul>
-            {/* use Link to route around the app */}
-            {this.state.users.map(user => (
-              <li key={user.id}><Link to={`/user/${user.id}`}>{user.name}</Link></li>
-            ))}
-          </ul>
-        </div>
-        <div className="detail">
-          {this.props.children}
-        </div>
-      </div>
-    )
-  }
-})
-
-const User = React.createClass({
-  componentDidMount() {
-    this.setState({
-      // route components are rendered with useful information, like URL params
-      user: findUserById(this.props.params.userId)
-    })
-  },
-
-  render() {
-    return (
-      <div>
-        <h2>{this.state.user.name}</h2>
-        {/* etc. */}
-      </div>
-    )
-  }
-})
-
-// Declarative route configuration (could also load this config lazily
-// instead, all you really need is a single root route, you don't need to
-// colocate the entire config).
-render((
-  <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <Route path="about" component={About}/>
-      <Route path="users" component={Users}>
-        <Route path="/user/:userId" component={User}/>
-      </Route>
-      <Route path="*" component={NoMatch}/>
-    </Route>
-  </Router>
-), document.body)
+import { App } from 'app'
+     
+render(<App />, document.getElementById('root'))
 ```
 
-See more in the [Introduction](https://github.com/reactjs/react-router/tree/master/docs/Introduction.md), [Guides](https://github.com/reactjs/react-router/tree/master/docs/guides/README.md), and [Examples](https://github.com/reactjs/react-router/tree/master/examples).
+#### How can I have multiple entry points?
 
-### Versioning and Stability
+Your config could look like this:
 
-We want React Router to be a stable dependency that’s easy to keep current. We follow the same versioning as React.js itself: [React Versioning Scheme](https://facebook.github.io/react/blog/2016/02/19/new-versioning-scheme.html).
+```js
+const config = {
+  entry: {
+    A: ['webpack-hot-middleware/client', './src/a.js'],
+    B: ['webpack-hot-middleware/client', './src/b.js']
+  },
+  // ...
+}
+```
 
-### Thanks
+Note that the order of files inside the entry point is important. And don’t forget to exclude the hot middleware client from the production builds!
 
-Thanks to [our sponsors](/SPONSORS.md) for supporting the development of
-React Router.
+## Discussion
 
-React Router was initially inspired by Ember's fantastic router. Many thanks to the Ember team.
+You can discuss React Transform and related projects in **#react-transform** channel on [Reactiflux Discord](http://reactiflux.com).
 
-Also, thanks to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to run our build in real browsers.
+## Thanks
 
-[build-badge]: https://img.shields.io/travis/reactjs/react-router/master.svg?style=flat-square
-[build]: https://travis-ci.org/reactjs/react-router
+* [@justingreenberg](https://github.com/justingreenberg) and [@thejameskyle](https://github.com/thejameskyle) for Babel 6 support.
 
-[npm-badge]: https://img.shields.io/npm/v/react-router.svg?style=flat-square
-[npm]: https://www.npmjs.org/package/react-router
+## License
 
-[coveralls-badge]: https://img.shields.io/coveralls/reactjs/react-router/master.svg?style=flat-square
-[coveralls]: https://coveralls.io/github/reactjs/react-router
-
-[discord-badge]: https://img.shields.io/badge/Discord-join%20chat%20%E2%86%92-738bd7.svg?style=flat-square
-[discord]: https://discord.gg/0ZcbPKXt5bYaNQ46
+CC0 (public domain)
