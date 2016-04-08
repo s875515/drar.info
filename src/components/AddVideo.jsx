@@ -45,7 +45,8 @@ export default class AddVideo extends Component {
       location: location,
       desc: desc,
       tags: tags,
-      date: date
+      date: date,
+      comments: []
     }, () => {
       this.setState({
         open: false

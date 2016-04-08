@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import style from './style';
+import CommentBox from './CommentBox';
 
 export default class ViewVideo extends Component {
   constructor(props) {
@@ -34,9 +35,9 @@ export default class ViewVideo extends Component {
 
     return (
       <div className={style.youtube}>
-        <img src={this.props.src} onClick={this.handleOpen} />
+        <img src={this.props.img} onClick={this.handleOpen} />
         <Dialog
-          title={this.props.text}
+          title={this.props.title}
           actions={actions}
           modal={false}
           open={this.state.open}
@@ -46,7 +47,8 @@ export default class ViewVideo extends Component {
           className={style.youtube_embed} src={`https://www.youtube.com/embed/${this.props.embed}`}
           frameBorder='0'
         />
-      <input type="text" />
+      <CommentBox id={this.props.id}/>
+
         </Dialog>
       </div>
     );
@@ -55,6 +57,6 @@ export default class ViewVideo extends Component {
 
 ViewVideo.propTypes = {
   embed: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired
+  img: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 };

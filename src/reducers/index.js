@@ -6,10 +6,9 @@ function videos (state = [], action) {
     case SET_DATA:
       let data = [];
       action.data.forEach(childshot => {
-        data.push(Object.assign({}, childshot.val(), {key: childshot.key()}));
+        data.push(Object.assign({}, childshot.val(), {id: childshot.key()}));
       });
-
-      return state.concat(data);
+      return data;
 
     case ADD_DATA:
       return Object.assign({}, state, {
