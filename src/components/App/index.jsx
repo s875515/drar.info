@@ -29,9 +29,7 @@ class App extends Component {
             <li className={style.tab}><Link to="/page2">精選影片</Link></li>
           </ul>
           <ReactCSSTransitionGroup
-            className="main-container"
-            component="div"
-            transitionName="example"
+            transitionName={style}
             transitionEnterTimeout={500}
             transitionLeaveTimeout={500}
           >

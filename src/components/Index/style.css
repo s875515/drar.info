@@ -1,0 +1,6 @@
+.Page {
+  position: absolute;
+  left: calc(50% - 400px);
+  height: 400px;
+  width: 800px;
+}

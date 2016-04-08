@@ -6,3 +6,21 @@
   display: inline-block;
   margin: 5px;
 }
+
+.enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.enter.enterActive {
+  opacity: 1;
+}
+
+.leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.leave.leaveActive {
+  opacity: 0.01;
+}

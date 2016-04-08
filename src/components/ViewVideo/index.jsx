@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
-// import style from './style';
+import style from './style';
 
 export default class ViewVideo extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ export default class ViewVideo extends Component {
     ];
 
     return (
-      <div>
+      <div className={style.youtube}>
         <img src={this.props.src} onClick={this.handleOpen} />
         <Dialog
           title={this.props.text}
@@ -43,9 +43,10 @@ export default class ViewVideo extends Component {
           onRequestClose={this.handleClose}
         >
         <iframe
-          className="youtube-embed" src={`https://www.youtube.com/embed/${this.props.embed}`}
+          className={style.youtube_embed} src={`https://www.youtube.com/embed/${this.props.embed}`}
           frameBorder='0'
         />
+      <input type="text" />
         </Dialog>
       </div>
     );
