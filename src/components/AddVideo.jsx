@@ -17,13 +17,7 @@ export default class AddVideo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
-      url: '',
-      title: '',
-      location: '',
-      desc: '',
-      tags: [],
-      date: ''
+      open: false
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -39,7 +33,7 @@ export default class AddVideo extends Component {
     let date = this.refs.date.getValue(),
       desc = this.refs.desc.getValue(),
       location = this.refs.location.getValue(),
-      tags = this.refs.tags.getValue(),
+      tags = this.refs.tags.getValue().split(',').map(word => word.replace(/\s/g, '')),
       title = this.refs.title.getValue(),
       url = this.refs.url.getValue();
 

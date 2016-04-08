@@ -1,18 +1,31 @@
 import {combineReducers} from 'redux';
-import {GET_DATA} from '../actions';
+import {SET_DATA, ADD_DATA} from '../actions';
 
-function setAllData(state = {videos: {}}, action) {
+function videos (state = [], action) {
   switch (action.type) {
-    case GET_DATA:
-      return {videos: action.data};
+    case SET_DATA:
+      let data = [];
+      action.data.forEach(childshot => {
+        data.push(Object.assign({}, childshot.val(), {key: childshot.key()}));
+      });
+
+      return state.concat(data);
+
+    case ADD_DATA:
+      return Object.assign({}, state, {
+        videos: [
+          ...state.videos,
+          data
+        ]
+      });
+
     default:
       return state;
   }
-
 }
 
 const rootReducer = combineReducers({
-  allData: setAllData
+  videos: videos
 });
 
 export default rootReducer;
