@@ -1,10 +1,11 @@
 import React, {Component, PropTypes} from 'react';
-import Dialog from 'material-ui/lib/dialog';
-import FlatButton from 'material-ui/lib/flat-button';
+import {setVisibilityFilter} from '../../actions';
+import {connect} from 'react-redux';
+import {Modal} from 'react-bootstrap';
 import style from './style';
 import CommentBox from './CommentBox';
 
-export default class ViewVideo extends Component {
+class ViewVideo extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,6 +13,7 @@ export default class ViewVideo extends Component {
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleTagClick = this.handleTagClick.bind(this);
   }
 
   handleOpen() {
@@ -23,40 +25,56 @@ export default class ViewVideo extends Component {
       open: false
     });
   }
-
+  handleTagClick(tag) {
+    const {dispatch} = this.props;
+    dispatch(setVisibilityFilter(tag));
+    this.setState({
+      open: false
+    });
+  }
   render() {
-    const actions = [
-      <FlatButton
-        label="關閉"
-        secondary={true}
-        onClick={this.handleClose}
-      />
-    ];
-
     return (
       <div className={style.youtube}>
         <img src={this.props.img} onClick={this.handleOpen} />
-        <Dialog
-          title={this.props.title}
-          actions={actions}
-          modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
-        >
-        <iframe
-          className={style.youtube_embed} src={`https://www.youtube.com/embed/${this.props.embed}`}
-          frameBorder='0'
-        />
-      <CommentBox id={this.props.id}/>
-
-        </Dialog>
+        <Modal show={this.state.open} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.props.title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <iframe
+              className={style.youtube_embed} src={`https://www.youtube.com/embed/${this.props.embed}`}
+              frameBorder='0'
+            />
+          {this.props.tags.map(tag => {
+            return (
+              <span
+                key={tag}
+                className={style.tag}
+                onClick={this.handleTagClick.bind(this, tag)}
+                name={tag}
+              >
+                {`#${tag}`}
+              </span>
+            );
+          })}
+          </Modal.Body>
+          <Modal.Footer className={style.modal_footer}>
+            <CommentBox comments={this.props.comments} id={this.props.id} />
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
 }
 
 ViewVideo.propTypes = {
+  comments: PropTypes.array,
   embed: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  tags: PropTypes.array,
+  dispatch: PropTypes.func.isRequired
 };
+
+export default connect()(ViewVideo);

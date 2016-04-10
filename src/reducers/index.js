@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
-import {SET_DATA, ADD_DATA} from '../actions';
+import {SET_DATA, SET_VISIBILITY_FILTER} from '../actions';
 
-function videos (state = [], action) {
+const videos = (state = [], action) => {
   switch (action.type) {
     case SET_DATA:
       let data = [];
@@ -9,22 +9,24 @@ function videos (state = [], action) {
         data.push(Object.assign({}, childshot.val(), {id: childshot.key()}));
       });
       return data;
-
-    case ADD_DATA:
-      return Object.assign({}, state, {
-        videos: [
-          ...state.videos,
-          data
-        ]
-      });
-
     default:
       return state;
   }
-}
+};
+
+const visibilityFilter = (state = 'SHOW_ALL', action) => {
+  switch (action.type) {
+    case SET_VISIBILITY_FILTER:
+      return action.filter;
+    default:
+      return state;
+  }
+};
+
 
 const rootReducer = combineReducers({
-  videos: videos
+  videos,
+  visibilityFilter
 });
 
 export default rootReducer;

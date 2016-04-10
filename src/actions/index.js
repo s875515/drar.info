@@ -1,11 +1,10 @@
 import Firebase from 'firebase';
 
-export const FETCH_DATA = 'FETCH_DATA';
 export const SET_DATA = 'SET_DATA';
-export const ADD_DATA = 'ADD_DATA';
+export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
 
 // on => once
-export function fetchData() {
+export const fetchData = () => {
   return dispatch => {
     let ref = new Firebase('https://drar.firebaseio.com/');
     ref.on('value', snapshot => {
@@ -15,11 +14,11 @@ export function fetchData() {
       });
     });
   };
-}
+};
 
-export function addData(data) {
+export const setVisibilityFilter = (filter) => {
   return {
-    type: 'ADD_DATA',
-    data
+    type: 'SET_VISIBILITY_FILTER',
+    filter
   };
-}
+};

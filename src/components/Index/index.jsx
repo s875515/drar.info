@@ -1,36 +1,46 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import ViewVideo from '../ViewVideo';
+import VideoList from '../VideoList';
+import {setVisibilityFilter} from '../../actions';
 import style from './style';
 
 class Index extends Component {
-  render() {
-    const {data} = this.props;
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
+  handleClick() {
+    const {dispatch} = this.props;
+    dispatch(setVisibilityFilter('SHOW_ALL'));
+  }
+
+  render() {
+    const {videos} = this.props;
     return (
       <div className={style.Page}>
-        <h1>熱門影片</h1>
-        <ul className={style.lists}>
-          {data.map((item, i) => (
-            <li className={style.list} key={i}>
-              <ViewVideo {...item} />
-              <p>{item.desc}</p>
-            </li>
-          ))}
-        </ul>
+        <h1 onClick={this.handleClick} >熱門影片</h1>
+        <VideoList videos={videos}/>
       </div>
     );
   }
 }
 
-Index.propTypes = {
-  data: PropTypes.array.isRequired
+const getVisibleVideos = (videos, filter) => {
+  switch (filter) {
+    case 'SHOW_ALL':
+      return videos;
+    default:
+      return videos.filter(t => {
+        return t.tags.indexOf(filter) !== -1;
+      });
+  }
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
-    data: state.videos
+    videos: getVisibleVideos(state.videos, state.visibilityFilter)
   };
-}
+};
 
 export default connect(mapStateToProps)(Index);

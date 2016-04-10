@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Header from '../../components/Header';
 import {connect} from 'react-redux';
@@ -30,8 +30,9 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  children: React.PropTypes.element,
-  location: React.PropTypes.object
+  dispatch: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 

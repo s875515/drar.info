@@ -5,7 +5,7 @@ import Firebase from 'firebase';
 import style from './style';
 
 function youtubeUrlParser(url) {
-  let id = url.match(/\?v=([(\w|\-)*(?!\&)]*)/)[1];
+  let id = url.match(/\?v=([(\w|\-)]*(?!\&)*)/)[1];
   return {
     img: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
     embed: id
@@ -32,7 +32,6 @@ export default class AddVideo extends Component {
       case 'location':
       case 'desc':
       case 'tags':
-        // console.log(this.state[`${name}Input`].hasFeedback)
         this.setState({[`${name}Input.hasFeedback`]: false});
         break;
       default:
@@ -55,6 +54,7 @@ export default class AddVideo extends Component {
         inputRef.reduce((prev, curr) => {
           return Object.assign(prev, {[curr]: this.refs[curr].state.value});
         }, {});
+      tags = tags.split(',').map(tag => tag.replace(/\s/g, ''));
       ref.push({
         url,
         img: youtubeUrlParser(url).img,
