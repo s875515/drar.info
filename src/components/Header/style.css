@@ -1,0 +1,13 @@
+.test > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.brand {
+  font-size: 30px;
+}
+
+.left {
+  margin-right: auto !important;
+}
