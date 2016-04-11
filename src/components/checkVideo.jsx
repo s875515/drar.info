@@ -9,11 +9,13 @@ export default class CheckVideo extends Component {
     this.state = {value: 1};
   }
 
-  handleChange(event, index, value) {this.setState({value})};
+  handleChange(event, index, value) {
+    this.setState({value});
+  }
 
   render() {
     return (
-      <DropDownMenu value={this.state.value} onChange={this.handleChange}>
+      <DropDownMenu value={this.state.value} onChange={this.handleChange.bind(this)}>
         <MenuItem value={1} primaryText="Never" />
         <MenuItem value={2} primaryText="Every Night" />
         <MenuItem value={3} primaryText="Weeknights" />

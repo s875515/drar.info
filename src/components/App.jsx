@@ -4,7 +4,8 @@ import {Link} from 'react-router';
 import CheckVideo from './checkVideo';
 import {connect} from 'react-redux';
 import {fetchData} from '../actions';
-import '../style/app';
+import CSSModules from 'react-css-modules';
+import styles from '../style/app';
 import FlatButton from 'material-ui/lib/flat-button';
 
 class App extends Component {
@@ -23,15 +24,16 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div className="breadcrumbs">
+        <div styleName="breadcrumbs">
           <h1><Link to="/">行車紀錄器分享平台管理系統</Link></h1>
-          <div className="logOut">
+          <div styleName="logOut">
             <FlatButton onClick={this.logOut}>log out</FlatButton>
           </div>
         </div>
         <div>
           <ReactCSSTransitionGroup
             className="main-container"
+            styleName="main-container"
             component="div"
             transitionName="example"
             transitionEnterTimeout={500}
@@ -51,5 +53,5 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired
 };
-
-export default connect()(App);
+const cssApp = CSSModules(App, styles);
+export default connect()(cssApp);
