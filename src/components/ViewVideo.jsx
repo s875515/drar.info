@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 export default class ViewVideo extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export default class ViewVideo extends Component {
 
     return (
       <div>
-        <img src={this.props.src} onClick={this.handleOpen} />
+        <RaisedButton src={this.props.src} onClick={this.handleOpen}>詳細</RaisedButton>
         <Dialog
           title={this.props.text}
           actions={actions}
@@ -53,5 +54,5 @@ export default class ViewVideo extends Component {
 ViewVideo.propTypes = {
   embed: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
 };

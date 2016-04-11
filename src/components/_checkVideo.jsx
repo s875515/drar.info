@@ -13,7 +13,7 @@ function youtubeUrlParser(url) {
   };
 }
 
-export default class AddVideo extends Component {
+export default class CheckVideo extends Component {
   constructor(props) {
     super(props);
     this.state = {

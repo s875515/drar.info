@@ -1,33 +1,35 @@
 import React, {Component, PropTypes} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Link} from 'react-router';
-import AddVideo from './AddVideo';
+import CheckVideo from './checkVideo';
 import {connect} from 'react-redux';
 import {fetchData} from '../actions';
 import '../style/app';
+import FlatButton from 'material-ui/lib/flat-button';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context)
+    this.logOut = this.logOut.bind(this)
   }
-
   componentDidMount() {
     let {dispatch} = this.props;
     dispatch(fetchData());
+  }
+  logOut() {
+    alert('log out')
   }
 
   render() {
     return (
       <div>
         <div className="breadcrumbs">
-          <h1><Link to="/">行車紀錄器分享平台</Link></h1>
-          <AddVideo />
+          <h1><Link to="/">行車紀錄器分享平台管理系統</Link></h1>
+          <div className="logOut">
+            <FlatButton onClick={this.logOut}>log out</FlatButton>
+          </div>
         </div>
         <div>
-          <ul>
-            <li className="menu-tab"><Link to="/page1">熱門影片</Link></li>
-            <li className="menu-tab"><Link to="/page2">精選影片</Link></li>
-          </ul>
           <ReactCSSTransitionGroup
             className="main-container"
             component="div"
