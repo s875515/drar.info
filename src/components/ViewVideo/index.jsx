@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {setVisibilityFilter} from '../../actions';
+import {addVisibilityFilter} from '../../actions';
 import {connect} from 'react-redux';
 import {Modal} from 'react-bootstrap';
 import style from './style';
@@ -27,7 +27,7 @@ class ViewVideo extends Component {
   }
   handleTagClick(tag) {
     const {dispatch} = this.props;
-    dispatch(setVisibilityFilter(tag));
+    dispatch(addVisibilityFilter(tag));
     this.setState({
       open: false
     });
@@ -51,7 +51,6 @@ class ViewVideo extends Component {
                 key={tag}
                 className={style.tag}
                 onClick={this.handleTagClick.bind(this, tag)}
-                name={tag}
               >
                 {`#${tag}`}
               </span>

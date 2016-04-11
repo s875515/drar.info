@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {SET_DATA, SET_VISIBILITY_FILTER} from '../actions';
+import {SET_DATA, ADD_VISIBILITY_FILTER, Reset_Visibility_Filter, Remove_Visibility_Filter} from '../actions';
 
 const videos = (state = [], action) => {
   switch (action.type) {
@@ -14,19 +14,22 @@ const videos = (state = [], action) => {
   }
 };
 
-const visibilityFilter = (state = 'SHOW_ALL', action) => {
+const visibilityFilters = (state = [], action) => {
   switch (action.type) {
-    case SET_VISIBILITY_FILTER:
-      return action.filter;
+    case ADD_VISIBILITY_FILTER:
+      return [action.filter].concat(state);
+    case Reset_Visibility_Filter:
+      return [];
+    case Remove_Visibility_Filter:
+      return state.filter( f => f !== action.filter);
     default:
       return state;
   }
 };
 
-
 const rootReducer = combineReducers({
   videos,
-  visibilityFilter
+  visibilityFilters
 });
 
 export default rootReducer;

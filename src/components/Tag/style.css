@@ -1,11 +1,5 @@
-.Page {
-  position: absolute;
-  left: calc(50% - 400px);
-  height: 400px;
-  width: 800px;
-}
-
 .tag {
+  display: inline;
   padding: 5px 10px;
   margin: 10px;
   font-size: 15px;
