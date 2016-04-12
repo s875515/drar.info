@@ -9,7 +9,7 @@ const VideoList = ({videos}) => {
         {videos.map((item, i) => (
           <li className={style.list} key={i}>
             <ViewVideo {...item} />
-            <p className="text-center">{item.desc}</p>
+            <p className="text-center">{item.title}</p>
           </li>
         ))}
       </ul>

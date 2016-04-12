@@ -32,8 +32,11 @@ export default class InputValidation extends Component {
     this.setState({value: e.target.value});
     let valid = '';
     switch (e.target.name) {
-      case 'title' || 'location' || 'desc' || 'tags':
-        if (e.target.value !== '') {
+      case 'tags':
+      case 'desc':
+      case 'location':
+      case 'title':
+        if (e.target.value.trim() !== '') {
           this.setValidationTrue();
         } else {
           this.setValidationFalse();
