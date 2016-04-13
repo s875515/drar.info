@@ -94,7 +94,7 @@ export default class AddVideo extends Component {
             <InputValidation label="網址" type="text" name="url" ref="url" placeholder="僅支援youtube影片"/>
             <InputValidation label="地點" type="text" name="location" ref="location" placeholder="台北市"/>
             <InputValidation label="描述" type="text" name="desc" ref="desc" placeholder="很恐怖"/>
-            <InputValidation label="日期" type="text" name="date" ref="date" placeholder="yyyy-mm-dd"/>
+            <InputValidation label="日期" type="date" name="date" ref="date" placeholder="yyyy-mm-dd"/>
             <InputValidation label="標籤" type="text" name="tags" ref="tags" placeholder="逗號分隔:tag1, tag2,..."/>
           </Modal.Body>
           <Modal.Footer>
