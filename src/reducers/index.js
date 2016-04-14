@@ -17,11 +17,15 @@ const videos = (state = [], action) => {
 const visibilityFilters = (state = [], action) => {
   switch (action.type) {
     case ADD_VISIBILITY_FILTER:
-      return [action.filter].concat(state);
+      if (state.indexOf(action.filter) === -1) {
+        return [action.filter].concat(state);
+      } else {
+        return state;
+      }
     case Reset_Visibility_Filter:
       return [];
     case Remove_Visibility_Filter:
-      return state.filter( f => f !== action.filter);
+      return state.filter(f => f !== action.filter);
     default:
       return state;
   }
