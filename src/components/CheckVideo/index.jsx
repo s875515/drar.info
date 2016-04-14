@@ -7,7 +7,7 @@ export default class CheckVideo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 1,
+      value: this.props.check
      };
     this.handleChange = this.handleChange.bind(this);
   }
