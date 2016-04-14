@@ -18,7 +18,9 @@ class Table extends Component {
         title: data[key].title,
         tags: data[key].tags,
         url: data[key].url,
-        embed: data[key].embed
+        embed: data[key].embed,
+        id: data[key].id,
+        check: data[key].check
       };
     });
 
@@ -44,10 +46,21 @@ class Table extends Component {
 						          <img src={list.img} />
                     </td>
                     <td styleName="td _center">
-                    	<CheckVideo />
+                    	<CheckVideo
+                        id={list.id}
+                        check={list.check||1}
+                      />
                     </td>
                     <td styleName="td _center">
-                    	<ViewVideo src={list.img} tag={list.tags} area={list.location} text={list.title} embed={list.embed} date={list.date}　desc={list.desc} />
+                    <ViewVideo
+                        src={list.img}
+                        tag={list.tags}
+                        area={list.location}
+                        text={list.title}
+                        embed={list.embed}
+                        date={list.date}
+                        desc={list.desc}
+                      />
                     </td>
               </tr>
             ))}
@@ -59,7 +72,7 @@ class Table extends Component {
 }
 
 Table.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {

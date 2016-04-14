@@ -44,18 +44,15 @@ class Index extends Component {
 }
 
 const getVisibleVideos = (videos, filters) => {
-  switch (filters) {
-    case []:
-      return videos;
+  switch (filters.length) {
+    case 0:
+      return videos.filter(video => video.check === 3);
     default:
       return videos.filter(video=>{
         return video.tags.filter(tag=>{
           return filters.indexOf(tag) !== -1;
         }).length === filters.length;
       });
-      // return videos.filter(t => {
-      //   return t.tags.indexOf(filter) !== -1;
-      // });
   }
 };
 

@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import DropDownMenu from 'material-ui/lib/DropDownMenu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+import Firebase from 'firebase';
 
 export default class CheckVideo extends Component {
   constructor(props) {
@@ -12,6 +13,11 @@ export default class CheckVideo extends Component {
   }
 
   handleChange(event, index, value) {
+    console.log(this.props)
+    let refFirebase = new Firebase('https://drar.firebaseio.com/');
+    refFirebase.child(this.props.id).update({
+      check: value
+    });
     this.setState({value});
   }
 
